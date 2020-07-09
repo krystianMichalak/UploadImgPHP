@@ -18,14 +18,14 @@ export class UploadImgComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      avatar: ['']
+      img: ['']
     })
   }
 
   onFileSelect(event) {
     if(event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.form.get('avatar').setValue(file);
+      this.form.get('img').setValue(file);
       this.fileAdded = true;
       const reader = new FileReader();
             reader.onload = (e: any) => {
@@ -43,12 +43,11 @@ export class UploadImgComponent implements OnInit {
 
   onSubmit() {
     const formData = new FormData();
-    formData.append('avatar', this.form.get('avatar').value);
+    formData.append('img', this.form.get('img').value);
 
     this.uploadService.uploadFile(formData).subscribe(
       (res) => {
         this.uploadResponse = res;
-          console.log(res);
       },
       (err) => {  
         console.log(err);
