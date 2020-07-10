@@ -1,16 +1,13 @@
 <h1>PHP with Angular 7 File Upload Example</h1>
 <div>
-  <div *ngIf="uploadResponse && uploadResponse.status === 'error'">
-
-  </div>
-  <div *ngIf="fileAdded">
-    <img [src]="image"/>
-  </div>
-
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
-    <input type="file" name="img" (change)="onFileSelect($event)" />
-    <button type="submit">Upload</button>
-
+  <form [formGroup]="form">
+    <label class="custom-file-upload">
+      <input type="file" name="img" (change)="onFileSelect($event)"/>
+      Custom label
+    </label>
   </form>
+  <div>
+    <p>img loaded from url</p>
+    <img [src]="imageUrl"/>
+  </div>  
 </div>

@@ -11,7 +11,7 @@ export class UploadImgComponent implements OnInit {
 
   form: FormGroup;
   uploadResponse;
-  image: string;
+  imageUrl: string;
   fileAdded: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private uploadService: UploadService) { }
@@ -33,15 +33,17 @@ export class UploadImgComponent implements OnInit {
                 image.src = e.target.result;
                 image.onload = rs => {
                     const imgBase64Path = e.target.result;
-                    this.image = imgBase64Path;
+                    this.imageUrl = imgBase64Path;
+                    console.log(this.imageUrl);
                     this.fileAdded = true;
                 };
             };
             reader.readAsDataURL(event.target.files[0]);
     }
+    this.upload();
   }
 
-  onSubmit() {
+  upload() {
     const formData = new FormData();
     formData.append('img', this.form.get('img').value);
 
