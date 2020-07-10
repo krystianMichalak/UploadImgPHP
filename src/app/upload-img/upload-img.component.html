@@ -1,13 +1,11 @@
-<h1>PHP with Angular 7 File Upload Example</h1>
 <div>
   <form [formGroup]="form">
     <label class="custom-file-upload">
       <input type="file" name="img" (change)="onFileSelect($event)"/>
-      Custom label
+      Upload file
     </label>
   </form>
   <div>
-    <p>img loaded from url</p>
     <img [src]="imageUrl"/>
   </div>  
 </div>
