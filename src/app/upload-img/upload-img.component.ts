@@ -12,9 +12,15 @@ export class UploadImgComponent implements OnInit {
   form: FormGroup;
   uploadResponse;
   imageUrl: string;
-  fileAdded: boolean = false;
+  imageUrlsMap: Map<string, string>;
 
-  constructor(private formBuilder: FormBuilder, private uploadService: UploadService) { }
+  constructor(private formBuilder: FormBuilder, private uploadService: UploadService) {
+    this.imageUrlsMap = new Map();
+    this.imageUrlsMap['1.png'] = "../../assets/1.png";
+    this.imageUrlsMap['2.png'] = "../../assets/2.png";
+    this.imageUrlsMap['3.png'] = "../../assets/3.png";
+    this.imageUrl = "../../assets/1.png";
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -22,23 +28,25 @@ export class UploadImgComponent implements OnInit {
     })
   }
 
+  onChange(newValue) {
+    this.imageUrl = this.imageUrlsMap[newValue];
+  }
+
   onFileSelect(event) {
-    if(event.target.files.length > 0) {
+    if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.form.get('img').setValue(file);
-      this.fileAdded = true;
       const reader = new FileReader();
-            reader.onload = (e: any) => {
-                const image = new Image();
-                image.src = e.target.result;
-                image.onload = rs => {
-                    const imgBase64Path = e.target.result;
-                    this.imageUrl = imgBase64Path;
-                    console.log(this.imageUrl);
-                    this.fileAdded = true;
-                };
-            };
-            reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = rs => {
+          const imgBase64Path = e.target.result;
+          this.imageUrlsMap['new'] = imgBase64Path;
+          this.imageUrl = imgBase64Path;
+        };
+      };
+      reader.readAsDataURL(event.target.files[0]);
     }
     this.upload();
   }
@@ -51,10 +59,13 @@ export class UploadImgComponent implements OnInit {
       (res) => {
         this.uploadResponse = res;
       },
-      (err) => {  
+      (err) => {
         console.log(err);
       }
     );
   }
 
+  getKeys(): string[] {
+    return Object.keys(this.imageUrlsMap);
+  }
 }

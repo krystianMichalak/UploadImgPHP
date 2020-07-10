@@ -1,11 +1,14 @@
 <div>
   <form [formGroup]="form">
     <label class="custom-file-upload">
-      <input type="file" name="img" (change)="onFileSelect($event)"/>
+      <input type="file" (change)="onFileSelect($event)" />
       Upload file
     </label>
   </form>
   <div>
-    <img [src]="imageUrl"/>
-  </div>  
+    <img class="wine-img" [src]="imageUrl"/>
+    <select (change)="onChange($event.target.value)">
+      <option [value]="i" *ngFor="let i of getKeys()">{{i}}</option>
+    </select>
+  </div>
 </div>
