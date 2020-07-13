@@ -58,6 +58,7 @@ export class UploadImgComponent implements OnInit {
     this.uploadService.uploadFile(formData).subscribe(
       (res) => {
         this.uploadResponse = res;
+        console.log(res);
       },
       (err) => {
         console.log(err);
